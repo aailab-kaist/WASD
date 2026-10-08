@@ -40,6 +40,3 @@ done
 
 # mean / std of ROUGE-L over the seeds -> results/gpt2/eval_main/_summary/
 python parse_result.py --model gpt2 --method "${ckpt}"
-
-# diversity (Distinct-n, Self-BLEU over the seeds) -> results/gpt2/eval_main/_summary/
-python get_diversity_score.py --model gpt2 --method "${ckpt}"
