@@ -1,5 +1,7 @@
 # WASD: Wasserstein-based Knowledge Distillation for Large Language Models (WASD) (NeurIPS 2026)
 
+| [paper](https://arxiv.org/abs/2610.07706) | [code](https://github.com/aailab-kaist/WASD) |
+
 --------------------
 
 This repository contains the official implementation of **"WASD: Wasserstein-based Knowledge Distillation for Large Language Models"** in **[NeurIPS 2026](https://neurips.cc/Conferences/2026)**.
