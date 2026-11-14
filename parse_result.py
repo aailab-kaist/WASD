@@ -30,21 +30,27 @@ if not os.path.exists(output_path):
 
 print (name)
 
-if os.path.exists(os.path.join("./results", model, "eval_main", metric_list[-1], name, str(seed_list[-1]), "log.txt")):
-    f = open(os.path.join(output_path, f"{name_log}.txt"), "w", encoding="utf-8")
+logs = []
+try:
     for metric in metric_list:
         res = []
         for seed in seed_list:
             log_path = os.path.join("./results", model, "eval_main", metric, name, str(seed), "log.txt")
+            rougeL = None
             with open(log_path, "r", encoding="utf-8") as _f:
                 for line in _f:
                     m = re.search(r"'rougeL'\s*:\s*([-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)", line)
                     if m:
                         rougeL = float(m.group(1))
+            if rougeL is None:
+                raise ValueError(f"Missing ROUGE-L metric in log: {log_path}")
             res.append(rougeL)
         log = f"{metric:<15} | {np.mean(res):.2f} ({np.std(res):.2f}) | {res}\n"
+        logs.append(log)
+except (OSError, ValueError) as exc:
+    parser.exit(1, f"Cannot summarize evaluation: {exc}\n")
+
+with open(os.path.join(output_path, f"{name_log}.txt"), "w", encoding="utf-8") as f:
+    for log in logs:
         print (log)
         f.write(log)
-    f.close()
-else:
-    print ("Not yet")
